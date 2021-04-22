@@ -1,0 +1,1 @@
+<script src="{{ asset('assets/tabler.min.js') }}"></script>
