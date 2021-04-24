@@ -3,8 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Traits\AdminTrait;
 
-use App\Traits;
 
 class AddRoleColumnToUsers extends Migration
 {
@@ -16,7 +16,7 @@ class AddRoleColumnToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum([Traits\ADMIN_ROLE, Traits\USER_ROLE])->nullable();
+            $table->enum('role', [AdminTrait::$ADMIN_ROLE, AdminTrait::$USER_ROLE])->nullable();
         });
     }
 
