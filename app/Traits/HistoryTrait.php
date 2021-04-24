@@ -33,4 +33,5 @@ trait HistoryTrait
     public static function isTempTooHigh(float $temp) {
 
     }
+
 }
