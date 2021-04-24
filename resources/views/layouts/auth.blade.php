@@ -11,12 +11,12 @@
 </head>
 <body>
 @include('partials.navigation')
-<div class="container-xl my-3">
-<div class="row">
-    <div class="col col-sm-6 offset-sm-3">
-        @yield('content')
-    </div>
-</div>
+<div class="container-xl my-3" style="display: grid; place-items: center; height: 68vh">
+    {{--<div class="row">--}}
+    {{--    <div class="col">--}}
+    @yield('content')
+    {{--    </div>--}}
+    {{--</div>--}}
 </div>
 @include('partials.scripts')
 </body>
