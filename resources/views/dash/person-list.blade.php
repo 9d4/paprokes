@@ -46,10 +46,10 @@
                     <td>{{ $person->rfid }}</td>
                     <td>{{ $person->name }}</td>
                     <td class="d-flex justify-content-end">
-                        <a class="px-2 btn btn-sm btn-ghost-warning text-warning"
+                        <a class="px-2 btn btn-sm btn-ghost-warning"
                            href="{{ route('person.edit', ['person'=>$person->id]) }}">Edit</a>
                         <form action="{{ route('person.destroy', ['person' => $person->id]) }}" method="post">
-                            <button class="text-danger btn btn-sm btn-ghost-danger" type="submit">Hapus</button>
+                            <button class="btn btn-sm btn-ghost-danger" type="submit">Hapus</button>
                             @method('DELETE')
                             @csrf
                         </form>
