@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Person;
 use App\Models\Record;
 use App\Traits\HistoryTrait;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class HistoryController extends Controller
 {
@@ -45,35 +47,51 @@ class HistoryController extends Controller
 
     public function all(Request $request)
     {
-        $now = Carbon::now();
         $out = [];
-        $Records = Record::query()->get()->sortByDesc('created_at');
+        $now = Carbon::now();
+        $search = false;
 
+        // Searching?
         if ($request->hasAny('name') && trim($request->query('name')) !== '') {
+            $search = true;
             $out['records'] = [];
             $lookedPeople = Person::query()->where('name', 'like', '%' . $request->name . '%')->get()->sortByDesc('created_at');
             $lookedRFIDs = [];
 
+            // get looked people rfid
             foreach ($lookedPeople as $person) {
                 array_push($lookedRFIDs, $person->rfid);
             }
 
-            foreach ($Records as $record) {
-                if (in_array($record->rfid, $lookedRFIDs))
-                    array_push($out['records'], $record);
+            // get records by looked rfid
+            foreach (Record::all()->sortByDesc('created_at') as $record) {
+                if (in_array($record->rfid, $lookedRFIDs)) {
+                    $rec = collect([
+                        'rfid' => $record['rfid'],
+                        'temp' => $record['temp'],
+                        'created_at' => $record['created_at'],
+                        'name' => HistoryTrait::getNameByRFID($record['rfid'])
+                    ]);
+
+                    array_push($out['records'], $rec);
+                }
             }
         } else {
+            $Records = Record::query()
+                ->sortable(['created_at' => 'desc'])
+                ->paginate(50)
+                ->withQueryString();
+
             $out['records'] = $Records;
         }
 
-
         foreach ($out['records'] as $record) {
-            $record->registered = HistoryTrait::isUserRegistered($record->rfid);
+            $record['registered'] = HistoryTrait::isUserRegistered($record['rfid']);
 
-            if ($record->registered)
-                $record->name = HistoryTrait::getNameByRFID($record->rfid);
+            if ($record['registered'])
+                $record['name'] = HistoryTrait::getNameByRFID($record['rfid']);
 
-            $time = $record->created_at;
+            $time = $record['created_at'];
             $hasBeen = Carbon::createFromTimeString($time)->diffInMinutes($now);
             $timeCode = 0;
 
@@ -85,10 +103,14 @@ class HistoryController extends Controller
                 $timeCode = 3;
             }
 
-            $record->time = $timeCode;
+            if ($search)
+                $record->put('time', $timeCode);
+            else
+                $record->time = $timeCode;
         }
 
         $out['total'] = count($out['records']);
+        $out['total_records'] = Record::count();
 
         return view('dash.history-all', $out);
     }

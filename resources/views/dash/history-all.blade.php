@@ -27,7 +27,7 @@
                         <input class="form-control form-control-rounded" type="text" name="name" placeholder="Nama..."
                                value="{{ request()->query('name') }}">
                         <button class="btn btn-azure form-control-rounded" type="submit">Cari</button>
-                        @if (request()->hasAny('name'))
+                        @if (request()->hasAny('name') && request()->query('name'))
                             <a class="btn btn-danger form-control-rounded" role="button"
                                href="{{ route('history.all') }}">Reset
                             </a>
@@ -39,40 +39,53 @@
     </div>
 
     <div class="table-responsive">
-        <p class="m-0">Total: {{ $total }}</p>
+        <p class="m-0">Total: @if (request()->query('name')) {{ $total }} @else {{ $total_records }} @endif</p>
+        @if (!request()->query('name'))
+            <div class="d-flex justify-content-center">
+                {{ $records->onEachSide(0)->links() }}
+            </div>
+        @endif
         <table class="table">
             <thead class="font-weight-bold">
             <tr>
-                <td>No</td>
+                {{--                <td>No</td>--}}
                 <td style="min-width: 169px">RFID</td>
                 <td style="min-width: 256px">Nama</td>
-                <td style="min-width: 15px">Suhu(&deg;C)</td>
-                <td style="min-width: 100px">Waktu</td>
+                <td style="min-width: 15px">
+                    @if (!request()->query('name'))
+                        @sortablelink('temp', 'Suhu(°C)')
+                    @else
+                        Suhu(&deg;C)
+                    @endif
+                </td>
+                <td style="min-width: 100px">
+                    @if (!request()->query('name'))
+                        @sortablelink('created_at', 'waktu')
+                    @else
+                        Waktu
+                    @endif
+                </td>
                 <td style="min-width: 10px">Terdaftar</td>
             </tr>
             </thead>
             <tbody>
-            @php
-                $index = 1;
-            @endphp
-            @foreach($records as $record)
-                <tr class="@if($record->time == 3) bg-orange-lt @elseif($record->time == 2) bg-lime-lt @elseif($record->time == 1) bg-blue-lt @endif">
-                    <td>{{ $index++ }}</td>
-                    <td>{{ $record->rfid }}</td>
+            @foreach($records as $index=>$record)
+                <tr class="@if($record['time'] == 3) bg-orange-lt @elseif($record['time'] == 2) bg-lime-lt @elseif($record['time'] == 1) bg-blue-lt @endif">
+                    <td>{{ $record['rfid'] }}</td>
                     <td>
-                        @if ($record->name)
-                            {{ $record->name }}
+                        @if ($record['name'])
+                            {{ $record['name'] }}
                         @else
                             <form action="{{ route('person.create') }}">
-                                <input type="hidden" name="rfid" value="{{$record->rfid}}">
+                                <input type="hidden" name="rfid" value="{{$record['rfid']}}">
                                 <button class="btn btn-sm btn-ghost-facebook" type="submit">Tambahkan</button>
                             </form>
                         @endif
                     </td>
-                    <td>{{ $record->temp }}</td>
-                    <td>{{ $record->created_at }}</td>
+                    <td>{{ $record['temp'] }}</td>
+                    <td>{{ $record['created_at'] }}</td>
                     <td>
-                        @if($record->registered)
+                        @if($record['registered'])
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check"
                                  width="44"
                                  height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#7bc62d" fill="none"
@@ -95,4 +108,9 @@
             </tbody>
         </table>
     </div>
+    @if (!request()->query('name'))
+        <div class="d-flex justify-content-center">
+            {{ $records->onEachSide(0)->links() }}
+        </div>
+    @endif
 @endsection
