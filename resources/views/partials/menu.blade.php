@@ -1,15 +1,17 @@
 @php
     $uri = request()->fullUrl();
-    $dashboard_active = $uri == route('dashboard');
-    $person_active = str_contains($uri, route('person.index'));
-    $person_all = $uri == route('person.index');
-    $person_create = $uri == route('person.create');
-    $history = str_contains($uri, route('history.all'));
-    $history_all = $uri == route('history.all');
-    $history_reg = $uri == route('history.reg');
-    $history_unreg = $uri == route('history.unreg');
-    $history_high = $uri == route('history.high');
-    $history_normal = $uri == route('history.normal');
+    $url = request()->url();
+
+    $dashboard_active = $url == route('dashboard');
+    $person_active = str_contains($url, route('person.index'));
+    $person_all = $url == route('person.index');
+    $person_create = $url == route('person.create');
+    $history = str_contains($url, route('history.all'));
+    $history_all =   $url == route('history.all');
+    $history_reg = $url == route('history.reg');
+    $history_unreg = $url == route('history.unreg');
+    $history_high = $url == route('history.high');
+    $history_normal = $url == route('history.normal');
 @endphp
 <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark">
     <div class="container-fluid">
