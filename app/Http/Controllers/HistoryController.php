@@ -130,7 +130,7 @@ class HistoryController extends Controller
 
     public function normal()
     {
-        $history = Record::query()->where('temp', '<', 37)->get()->sortByDesc('created_at');
+        $history = Record::sortable(['created_at' => 'desc'])->where('temp', '<', 37)->paginate(50);
 
         foreach ($history as $item) {
             if (HistoryTrait::isUserRegistered($item->rfid)) {
@@ -138,6 +138,6 @@ class HistoryController extends Controller
             }
         }
 
-        return view('dash.tempnormal', ['records' => $history, 'total' => count($history)]);
+        return view('dash.tempnormal', ['records' => $history, 'total' => Record::all()->count()]);
     }
 }

@@ -15,6 +15,9 @@
 
     <div class="table-responsive">
         <p class="m-0">Total: {{ $total }}</p>
+        <div class="d-flex justify-content-center">
+            {{ $records->onEachSide(0)->links() }}
+        </div>
         <table class="table">
             <thead class="font-weight-bold">
             <tr>
@@ -49,5 +52,8 @@
             @endforeach
             </tbody>
         </table>
+    </div>
+    <div class="d-flex justify-content-center">
+        {{ $records->onEachSide(0)->links() }}
     </div>
 @endsection
