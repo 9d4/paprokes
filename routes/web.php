@@ -34,17 +34,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout.post');
 
-    Route::resource('/dash/person', PersonController::class);
-
-    Route::group(['prefix' => '/dash/history'], function () {
-        Route::get('', [HistoryController::class, 'all'])->name('history.all');
-        Route::get('reg', [HistoryController::class, 'registered'])->name('history.reg');
-        Route::get('unreg', [HistoryController::class, 'unregistered'])->name('history.unreg');
-        Route::get('high', [HistoryController::class, 'high'])->name('history.high');
-        Route::get('normal', [HistoryController::class, 'normal'])->name('history.normal');
+    Route::prefix('/dash')->group(function () {
+        Route::resource('/person', PersonController::class);
+        Route::group(['prefix' => '/history'], function () {
+            Route::get('', [HistoryController::class, 'all'])->name('history.all');
+            Route::get('reg', [HistoryController::class, 'registered'])->name('history.reg');
+            Route::get('unreg', [HistoryController::class, 'unregistered'])->name('history.unreg');
+            Route::get('high', [HistoryController::class, 'high'])->name('history.high');
+            Route::get('normal', [HistoryController::class, 'normal'])->name('history.normal');
+        });
+        include 'admin.php';
     });
 });
-
 
 Route::get('debug', function () {
 
