@@ -117,7 +117,8 @@ class HistoryController extends Controller
 
     public function high()
     {
-        $history = Record::query()->where('temp', '>=', 37)->get()->sortByDesc('created_at');
+        $history = Record::sortable(['created_at' => 'desc'])->where('temp', '>=', 37)->paginate(50);
+        $history_count = Record::where('temp', '>=', 37)->get()->count();
 
         foreach ($history as $item) {
             if (HistoryTrait::isUserRegistered($item->rfid)) {
@@ -125,12 +126,13 @@ class HistoryController extends Controller
             }
         }
 
-        return view('dash.temphigh', ['records' => $history, 'total' => count($history)]);
+        return view('dash.temphigh', ['records' => $history, 'total' => $history_count]);
     }
 
     public function normal()
     {
         $history = Record::sortable(['created_at' => 'desc'])->where('temp', '<', 37)->paginate(50);
+        $history_count = Record::where('temp', '<', 37)->get()->count();
 
         foreach ($history as $item) {
             if (HistoryTrait::isUserRegistered($item->rfid)) {
@@ -138,6 +140,6 @@ class HistoryController extends Controller
             }
         }
 
-        return view('dash.tempnormal', ['records' => $history, 'total' => Record::all()->count()]);
+        return view('dash.tempnormal', ['records' => $history, 'total' => $history_count]);
     }
 }
