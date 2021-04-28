@@ -26,7 +26,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('all', [RecordController::class, 'index'])->name('api.records');
+//Route::get('all', [RecordController::class, 'index'])->name('api.records')->middleware(['auth:api']);
 Route::get('store', [RecordController::class, 'store'])->name('api.record.store');
 
 Route::get('/debug', function (Request $request) {

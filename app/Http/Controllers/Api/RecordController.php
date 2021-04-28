@@ -2,56 +2,33 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\NewRecord;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RecordResource;
 use App\Models\Person;
 use App\Models\Record;
+use App\Traits\HistoryTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class RecordController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
     public function index()
     {
-        $records = Record::all();
+        $Records = Record::all()->sortByDesc('created_at')->take(100);
 
-        foreach ($records as $record) {
-            if ($personFound = count(Person::query()->where('rfid', $record->rfid)->get())) {
-                $record->registered = true;
-            } else {
-                $record->registered = false;
-            }
+        foreach ($Records as $record) {
+            $record->registered = !!HistoryTrait::isUserRegistered($record['rfid']);
+            $record->name = HistoryTrait::getNameByRFID($record['rfid']);
         }
 
-        return RecordResource::collection($records);
+        return RecordResource::collection($Records);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return RecordResource
-     */
     public function store(Request $request)
     {
         $request->validate([
             'rfid' => 'required',
-//            'temp' => 'required|numeric'
         ]);
 
         $personFound = count(Person::query()->where('rfid', $request->rfid)->get());
@@ -67,51 +44,11 @@ class RecordController extends Controller
             $record->registered = false;
         }
 
+        // beta: broadcast
+        broadcast(new NewRecord($record))->toOthers();
+//        event(new NewRecord($record));
+
         return new RecordResource($record);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

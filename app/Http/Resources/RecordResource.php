@@ -15,9 +15,12 @@ class RecordResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'rfid' => $this->rfid,
             'temp' => $this->temp,
             'registered' => $this->registered,
+            'name' => $this->name,
+            'time' => $this->created_at
         ];
     }
 }

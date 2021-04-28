@@ -16,11 +16,28 @@
                     <div class="card-body">
                         <span class="font-weight-light h1">Masuk</span>
                         <p class="display-3 font-weight-bold">{{ $total_in_today }}</p>
-                        <p class="">Hari Ini</p>
+                        <div class="d-flex justify-content-between">
+                            <p class="">Hari Ini</p>
+                            <button onclick="realtimePage(event)" class="btn btn-sm btn-flickr">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-triangle" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M12 9v2m0 4v.01" />
+                                    <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+                                </svg>
+                                Realtime (beta)
+                            </button>
+                        </div>
                     </div>
                 </div>
             </a>
         </div>
+
+        <script>
+            function realtimePage(e) {
+                e.preventDefault();
+                location.href = "{{ route('beta.realtime') }}";
+            }
+        </script>
 
         <div class="col-12 col-sm-6 py-2">
             <a href="{{ route('history.all') }}" class="text-decoration-none">

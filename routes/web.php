@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('high', [HistoryController::class, 'high'])->name('history.high');
             Route::get('normal', [HistoryController::class, 'normal'])->name('history.normal');
         });
+        include 'beta.php';
     });
     include 'admin.php';
 });

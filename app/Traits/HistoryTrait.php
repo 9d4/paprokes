@@ -21,7 +21,10 @@ trait HistoryTrait
 
     public static function getNameByRFID(string $rfid)
     {
-        return self::getPersonByRFID($rfid)->name;
+        if (self::getPersonByRFID($rfid) != null)
+            return self::getPersonByRFID($rfid)->name;
+        else
+            return null;
     }
 
     public static function isTimestampToday(string $timestamp)
