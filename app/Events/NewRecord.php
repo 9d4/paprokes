@@ -38,6 +38,6 @@ class NewRecord implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('record');
+        return new PrivateChannel('record');
     }
 }

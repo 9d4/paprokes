@@ -11,5 +11,5 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/beta/realtime/app.js', 'js/beta/realtime')
-    .sass('resources/css/beta/realtime/app.sass', 'css/beta/realtime');
+mix.js('resources/beta/realtime/app.js', 'beta/realtime')
+    .sass('resources/beta/realtime/app.sass', 'beta/realtime');

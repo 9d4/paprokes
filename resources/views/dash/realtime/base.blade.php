@@ -14,15 +14,19 @@
             'pusherCluster' => config('broadcasting.connections.pusher.options.cluster'),
         ]) !!}
     </script>
-    <link rel="stylesheet" href="{{ asset('css/beta/realtime/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('beta/realtime/app.css') }}">
 </head>
 <body>
-<div class="container" id="app">
-    <h4 class="bg-warning p-2 mb-2">Realtime Record <span class="badge bg-primary">Beta</span></h4>
-    <small>The last 50 records</small>
-    @yield('content')
+<div id="app">
+    <div class="bg-warning p-2 mb-2 d-flex justify-content-between align-items-center">
+        <h4>Realtime Record <span class="badge bg-primary">Beta</span></h4>
+        <span class="h5">@{{ time }} - @{{ year }}</span>
+    </div>
+    <div class="container-lg">
+        <small>Only the last @{{ records.length }} records will be shown on the table.</small>
+        @yield('content')
+    </div>
 </div>
-<script src="{{ asset('js/beta/realtime/app.js') }}"></script>
-<script src="{{ asset('js/beta/realtime/view.js') }}"></script>
+<script src="{{ asset('beta/realtime/app.js') }}"></script>
 </body>
 </html>

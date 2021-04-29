@@ -15,7 +15,7 @@ class RecordController extends Controller
 {
     public function index()
     {
-        $Records = Record::all()->sortByDesc('created_at')->take(100);
+        $Records = Record::all()->sortByDesc('created_at')->take(128);
 
         foreach ($Records as $record) {
             $record->registered = !!HistoryTrait::isUserRegistered($record['rfid']);
