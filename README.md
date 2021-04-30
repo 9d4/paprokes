@@ -1,16 +1,13 @@
 #### How to Run
 
-Configure the `docker-compose.yml` base on you need. You may
-change ports or something. For example if you want to run 
-this branch and `main` branch simultaneously, you need to change
-the ports so the won't collide.
+_Make sure you have read [Laravel Sail docs](https://laravel.com/docs/8.x/sail)
+to grasp the basic of sail._
+---
+**Sail User Notice**
 
-Simply execute 
-```
-sail -p paprokes-2 up -d
-```
-to run the container, which
-`paprokes-2` is the prefix for docker name.
+This branch is very experimental, so we need to isolate from the main branch.
+Don't worry, we have all set. Just run execute `sail up` to start the project.
 
-Make sure you have read [Laravel Sail docs](https://laravel.com/docs/8.x/sail)
-to grasp the basic of sail.
+Nevertheless, if you want to customize it just open the `docker-compose.yml`.
+Keep in mind, _networks_ names and _volumes_ names cannot be the same with the
+main branch.

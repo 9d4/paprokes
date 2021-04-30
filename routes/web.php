@@ -17,6 +17,12 @@ use App\Http\Controllers\PersonController;
 |
 */
 
+Route::prefix('v2')->group(function () {
+    Route::get('/', function() {
+        return 200;
+    });
+});
+
 Route::get('/', function () {
     return redirect(route('dashboard'));
 });

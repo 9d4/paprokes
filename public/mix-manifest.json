@@ -1,4 +1,6 @@
 {
+    "/v2-assets/js/app.js": "/v2-assets/js/app.js",
     "/beta/realtime/app.js": "/beta/realtime/app.js",
+    "/v2-assets/css/app.css": "/v2-assets/css/app.css",
     "/beta/realtime/app.css": "/beta/realtime/app.css"
 }

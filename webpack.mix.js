@@ -11,5 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.js('resources/v2/js/app.js', 'v2-assets/js')
+    .postCss('resources/v2/css/app.css', 'v2-assets/css', [require('tailwindcss')]);
+
 mix.js('resources/beta/realtime/app.js', 'beta/realtime')
     .sass('resources/beta/realtime/app.sass', 'beta/realtime');
