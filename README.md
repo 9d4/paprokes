@@ -9,7 +9,7 @@ Simply execute
 ```
 sail -p paprokes-2 up -d
 ```
-to run the container, which is
+to run the container, which
 `paprokes-2` is the prefix for docker name.
 
 Make sure you have read [Laravel Sail docs](https://laravel.com/docs/8.x/sail)
