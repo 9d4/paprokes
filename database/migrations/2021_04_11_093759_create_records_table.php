@@ -15,6 +15,7 @@ class CreateRecordsTable extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->foreignId('device_id')->constrained()->cascadeOnDelete();
             $table->string('rfid');
             $table->float('temp')->nullable();
             $table->timestamps();

@@ -15,7 +15,7 @@ class CreateKeysTable extends Migration
     {
         Schema::create('keys', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreign('device_id')->references('device_id')->on('devices');
+            $table->foreignId('device_id')->constrained()->cascadeOnDelete();
             $table->longText('api_key');
             $table->timestamps();
         });

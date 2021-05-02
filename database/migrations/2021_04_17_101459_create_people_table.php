@@ -15,6 +15,7 @@ class CreatePeopleTable extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->foreignId('device_id')->constrained();
             $table->string('rfid')->unique();
             $table->string('name');
             $table->timestamps();

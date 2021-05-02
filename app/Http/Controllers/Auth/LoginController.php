@@ -15,7 +15,7 @@ class LoginController extends Controller
      */
     public function index()
     {
-        return view('auth.login');
+        return view('v2.auth.login');
     }
 
     public function submit(Request $request)
@@ -25,7 +25,11 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        $credentials = $request->only(['username', 'password']);
+        $login_with = filter_var($request['username'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $credentials = [
+            $login_with => $request['username'],
+            'password' => $request['password'],
+        ];
 
         Auth::attempt($credentials);
         return back();

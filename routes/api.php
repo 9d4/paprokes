@@ -32,6 +32,7 @@ Route::get('store', [RecordController::class, 'store'])->name('api.record.store'
 Route::get('/debug', function (Request $request) {
     return \App\Models\User::create([
         'username' => 'admin',
+        'email' => 'traperwaze@gmail.com',
         'password' => bcrypt('admin'),
     ]);
 });

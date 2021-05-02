@@ -23,7 +23,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect()->intended(route('dashboard'));
+                return redirect()->intended(route('index'));
             }
         }
 
