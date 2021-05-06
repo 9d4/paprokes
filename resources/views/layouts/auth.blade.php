@@ -1,23 +1,20 @@
 <!doctype html>
-<html lang="{{ config('app.locale') }}">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title') | {{ env('APP_NAME') }}</title>
-    <link rel="stylesheet" href="{{ asset('assets/tabler.min.css') }}">
-    <meta name="csrf_token" content="{{ csrf_token() }}">
+    <title>@yield('title') - {{ config('app.name') }}</title>
+    <link rel="stylesheet" href="{{ asset('v2-assets/css/tw.css') }}">
 </head>
 <body>
-@include('partials.navigation')
-<div class="container-xl my-3" style="display: grid; place-items: center; height: 68vh">
-    {{--<div class="row">--}}
-    {{--    <div class="col">--}}
-    @yield('content')
-    {{--    </div>--}}
-    {{--</div>--}}
+<div class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        @yield('content')
+    </div>
 </div>
-@include('partials.scripts')
+<div class="sr-only">Icons made by <a href="https://creativemarket.com/eucalyp" title="Eucalyp">Eucalyp</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+<script src="{{ asset('v2-assets/js/app.js') }}"></script>
 </body>
 </html>

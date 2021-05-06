@@ -17,17 +17,22 @@ use App\Http\Controllers\PersonController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('logout', [LoginController::class, 'logout']);
-});
-
-
 Route::get('/', [DashController::class, 'index'])->name('index');
 
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
+    include 'device.php';
+});
+
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/signup', [RegisterController::class, 'index'])->name('signup');
-    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::view('login', 'auth.login')->name('login');
+    Route::view('signup', 'auth.register')->name('signup');
+
     Route::post('/login', [LoginController::class, 'submit'])->name('login.submit');
+    Route::post('/signup', [RegisterController::class, 'store'])->name('login.submit');
+});
+
+Route::get('debug', function () {
+    return \App\Traits\DeviceTrait::generateDeviceKey();
 });

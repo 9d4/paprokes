@@ -14,6 +14,7 @@ class Record extends Model
     protected $fillable = [
         'rfid',
         'temp',
+        'device_id',
     ];
 
     public $sortable = [

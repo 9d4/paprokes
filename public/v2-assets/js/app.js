@@ -11,6 +11,19 @@
 
 /***/ }),
 
+/***/ "./resources/v2/css/admin.sass":
+/*!*************************************!*\
+  !*** ./resources/v2/css/admin.sass ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/beta/realtime/app.sass":
 /*!******************************************!*\
   !*** ./resources/beta/realtime/app.sass ***!
@@ -24,10 +37,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/v2/css/app.css":
-/*!**********************************!*\
-  !*** ./resources/v2/css/app.css ***!
-  \**********************************/
+/***/ "./resources/v2/css/tw.css":
+/*!*********************************!*\
+  !*** ./resources/v2/css/tw.css ***!
+  \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -123,7 +136,8 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/v2-assets/js/app": 0,
-/******/ 			"v2-assets/css/app": 0,
+/******/ 			"v2-assets/css/tw": 0,
+/******/ 			"v2-assets/css/admin": 0,
 /******/ 			"beta/realtime/app": 0
 /******/ 		};
 /******/ 		
@@ -172,9 +186,10 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["v2-assets/css/app","beta/realtime/app"], () => (__webpack_require__("./resources/v2/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["v2-assets/css/app","beta/realtime/app"], () => (__webpack_require__("./resources/beta/realtime/app.sass")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["v2-assets/css/app","beta/realtime/app"], () => (__webpack_require__("./resources/v2/css/app.css")))
+/******/ 	__webpack_require__.O(undefined, ["v2-assets/css/tw","v2-assets/css/admin","beta/realtime/app"], () => (__webpack_require__("./resources/v2/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["v2-assets/css/tw","v2-assets/css/admin","beta/realtime/app"], () => (__webpack_require__("./resources/v2/css/admin.sass")))
+/******/ 	__webpack_require__.O(undefined, ["v2-assets/css/tw","v2-assets/css/admin","beta/realtime/app"], () => (__webpack_require__("./resources/beta/realtime/app.sass")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["v2-assets/css/tw","v2-assets/css/admin","beta/realtime/app"], () => (__webpack_require__("./resources/v2/css/tw.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

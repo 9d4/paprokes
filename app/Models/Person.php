@@ -9,5 +9,9 @@ class Person extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['rfid', 'name'];
+    protected $fillable = ['rfid', 'name', 'device_id'];
+
+    public function device() {
+        return $this->belongsTo(Device::class);
+    }
 }
