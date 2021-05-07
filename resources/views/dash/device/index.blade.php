@@ -10,7 +10,7 @@
                             {{ $device->name }}
                         </button>
                     </div>
-                    <div id="device{{ $device->device_id }}" class="collapse show">
+                    <div id="device{{ $device->device_id }}" class="collapse">
                         <div class="card-body">
                             <small>Added on: {{ $device->added_on }}</small>
                             <a role="button" href="{{ route('device.show', ['device' => $device->device_id]) }}"
@@ -21,6 +21,10 @@
                             <section>
                                 <p>Api Key:</p>
                                 <pre class="bg-secondary">{{ $device->key->api_key }}</pre>
+                            </section>
+                            <section>
+                                <p>Request:</p>
+                                <pre class="bg-secondary">GET ...</pre>
                             </section>
                         </div>
                     </div>

@@ -36,3 +36,5 @@ Route::get('/debug', function (Request $request) {
         'password' => bcrypt('admin'),
     ]);
 });
+
+Route::get('new-record', [RecordController::class, 'newRecord']);

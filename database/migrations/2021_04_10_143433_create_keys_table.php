@@ -14,6 +14,7 @@ class CreateKeysTable extends Migration
     public function up()
     {
         Schema::create('keys', function (Blueprint $table) {
+            $table->collation = 'utf8mb4_bin';
             $table->bigIncrements('id');
             $table->foreignId('device_id')->constrained()->cascadeOnDelete();
             $table->longText('api_key');

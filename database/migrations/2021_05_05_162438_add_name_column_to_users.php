@@ -14,6 +14,7 @@ class AddNameColumnToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->collation = 'utf8mb4_bin';
             $table->string('name')->nullable();
         });
     }

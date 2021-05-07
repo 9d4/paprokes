@@ -34,5 +34,6 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::get('debug', function () {
-    return \App\Traits\DeviceTrait::generateDeviceKey();
+//    return request()->api_key;
+    return $key = App\Models\Key::query()->where('api_key', 'LIKE',  request()->get('api_key'))->with('device')->get();
 });

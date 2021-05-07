@@ -21,6 +21,9 @@
             <div class="container-lg px-4 {{ $attributes['class'] }}">
                 <div class="mb-3">
                     <x-dash.title>{{ $pageTitle ?? $attributes['page-title']}}</x-dash.title>
+                    @if (!!$attributes['page-subtitle'])
+                        <x-dash.subtitle>{{ $attributes['page-subtitle'] }}</x-dash.subtitle>
+                    @endif
                 </div>
                 <hr/>
                 {{ $slot }}

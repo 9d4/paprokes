@@ -69,13 +69,16 @@ class DeviceController extends Controller
      */
     public function show(string $id)
     {
-        $device = Device::query()->where('device_id', $id)->first();
+        $device = Device::query()
+            ->where('device_id', $id)
+            ->with(['key', 'user', 'records', 'people'])
+            ->first();
 
         if (!$device)
             abort(404);
 
         if (Gate::allows('control-device', $device))
-            return 'able to control';
+            return view('dash.device.item.index', ['device' => $device]);
 
         abort(403);
     }

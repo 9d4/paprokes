@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Events\NewRecord;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ApiNewRecord;
+use App\Http\Resources\ApiRecordResource;
 use App\Http\Resources\RecordResource;
 use App\Models\Person;
 use App\Models\Record;
@@ -51,4 +53,17 @@ class RecordController extends Controller
         return new RecordResource($record);
     }
 
+    public function newRecord(ApiNewRecord $request)
+    {
+        // push record
+        $record = new Record;
+
+        $record->device_id = $request->device->id;
+        $record->rfid = $request->rfid;
+        $record->temp = $request->temp;
+
+        $record->save();
+
+        return new ApiRecordResource($record);
+    }
 }

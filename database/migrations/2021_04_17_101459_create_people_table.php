@@ -14,6 +14,7 @@ class CreatePeopleTable extends Migration
     public function up()
     {
         Schema::create('people', function (Blueprint $table) {
+            $table->collation = 'utf8mb4_bin';
             $table->bigIncrements('id');
             $table->foreignId('device_id')->constrained();
             $table->string('rfid')->unique();

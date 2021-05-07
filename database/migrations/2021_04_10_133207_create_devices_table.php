@@ -14,6 +14,7 @@ class CreateDevicesTable extends Migration
     public function up()
     {
         Schema::create('devices', function (Blueprint $table) {
+            $table->collation = 'utf8mb4_bin';
             $table->bigIncrements('id');
             $table->string('device_id')->unique();
             $table->foreignId('user_id')->constrained();
