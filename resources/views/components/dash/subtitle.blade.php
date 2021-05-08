@@ -1,0 +1,1 @@
+<h6 class="font-weight-light {{ $attributes['class'] }}">{{ $slot }}</h6>

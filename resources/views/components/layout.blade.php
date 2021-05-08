@@ -5,12 +5,16 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? $attributes['title'] ?? config('app.name') }}</title>
     @auth
         <link rel="stylesheet" href="{{ asset('v2-assets/css/admin.css') }}">
     @elseguest
         <link rel="stylesheet" href="{{ asset('v2-assets/css/tw.css') }}">
     @endauth
+    <script>
+        let app = {!! json_encode(['csrf' => csrf_token()]) !!}
+    </script>
 </head>
 @auth
     <body class="layout-fixed layout-navbar-fixed dark-mode">
@@ -30,6 +34,8 @@
             </div>
         </div>
     </main>
+    <div id="dialogContainer"></div>
+    <div id="dialogBackdrop" class="fade"></div>
     <script src="{{ asset('v2-assets/js/admin.js') }}" defer></script>
     </body>
 @elseguest

@@ -37,4 +37,4 @@ Route::get('/debug', function (Request $request) {
     ]);
 });
 
-Route::get('new-record', [RecordController::class, 'newRecord']);
+Route::get('new-record', [RecordController::class, 'newRecord'])->name('api.newRecord');

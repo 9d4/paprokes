@@ -1,5 +1,6 @@
 @inject('user', 'UserService')
 @inject('nav', 'NavService')
+@inject('dev', 'DeviceService')
 @inject('Str', "\Illuminate\Support\Str")
 
 <nav class="main-header navbar navbar-expand navbar-dark">
@@ -11,8 +12,20 @@
         <li class="nav-item d-none d-sm-inline-block">
             <a href="{{ route('index') }}" class="nav-link @if($nav->dash_active) active @endif">Dashboard</a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ route('device.index') }}" class="nav-link">My Devices</a>
+        <li class="nav-item d-none d-sm-inline-block dropdown">
+            <a role="button" class="nav-link dropdown-toggle" data-toggle="dropdown">My Devices</a>
+            <div class="dropdown-menu dropdown-menu-left">
+                <a href="{{ route('device.index') }}" class="dropdown-item">All</a>
+                <div class="dropdown-divider"></div>
+                @foreach($dev->myDevicesFirstTen() as $device)
+                    <a class="dropdown-item" href="{{ route('device.show', ['device' => $device->device_id]) }}">{{ $device->name }}</a>
+                @endforeach
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-footer">Click all to see all devices</div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('device.create') }}">New Device</a>
         </li>
     </ul>
 

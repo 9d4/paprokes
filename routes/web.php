@@ -34,6 +34,6 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::get('debug', function () {
-//    return request()->api_key;
-    return $key = App\Models\Key::query()->where('api_key', 'LIKE',  request()->get('api_key'))->with('device')->get();
+
+    abort(404);
 });

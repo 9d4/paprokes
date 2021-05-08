@@ -17,6 +17,44 @@
 
 /***/ }),
 
+/***/ "./resources/v2/js/delete-dialog.js":
+/*!******************************************!*\
+  !*** ./resources/v2/js/delete-dialog.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+var container = document.querySelector('#dialogContainer');
+
+function getDeleteDialogStub(name, id, route) {
+  return "\n<div class=\"modal fade show\" tabindex=\"-1\" id=\"modal_delete_".concat(id, "\" data-backdrop=\"static\">\n  <div class=\"modal-dialog modal-dialog-centered modal-dialog-scrollable\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\">Confirm</h5>\n      </div>\n      <div class=\"modal-body\">\n        <p>Are you sure want to delete your device?</p>\n        <pre class=\"text-light card-text\">Name    : ").concat(name, "\nID      : ").concat(id, "</pre> \n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" id=\"modal_btn_close_").concat(id, "\">Cancel</button>\n        <form method=\"post\" action=\"").concat(route, "\">\n            <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n            <input type=\"hidden\" name=\"_token\" value=\"").concat(app.csrf, "\">\n            <input type=\"hidden\" name=\"_method\" value=\"delete\">\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n    ");
+}
+
+function fireDeleteDialog(name, id, route) {
+  container.innerHTML += getDeleteDialogStub(name, id, route);
+  document.querySelector("#modal_btn_close_".concat(id)).addEventListener('click', function () {
+    $("#modal_delete_".concat(id)).modal('hide');
+    removeDeleteDialog();
+  });
+  $("#modal_delete_".concat(id)).modal('show');
+}
+
+function removeDeleteDialog() {
+  container.innerHTML = null;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  var deleteButtons = document.querySelectorAll("button[data-delete=device]");
+  deleteButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      fireDeleteDialog(btn.getAttribute('data-name'), btn.getAttribute('data-id'), btn.getAttribute('data-route'));
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js":
 /*!****************************************************************!*\
   !*** ./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js ***!
@@ -11013,11 +11051,15 @@ var __webpack_exports__ = {};
   !*** ./resources/v2/js/admin.js ***!
   \**********************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var admin_lte__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! admin-lte */ "./node_modules/admin-lte/dist/js/adminlte.min.js");
-/* harmony import */ var admin_lte__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(admin_lte__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var bootstrap_dist_js_bootstrap_bundle_min__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.min */ "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js");
+/* harmony import */ var bootstrap_dist_js_bootstrap_bundle_min__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_js_bootstrap_bundle_min__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var admin_lte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! admin-lte */ "./node_modules/admin-lte/dist/js/adminlte.min.js");
+/* harmony import */ var admin_lte__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(admin_lte__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _delete_dialog__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./delete-dialog */ "./resources/v2/js/delete-dialog.js");
+/* harmony import */ var _delete_dialog__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_delete_dialog__WEBPACK_IMPORTED_MODULE_2__);
 var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
-__webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.min */ "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js");
+
 
 
 })();

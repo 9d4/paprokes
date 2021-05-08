@@ -9,6 +9,8 @@ use App\Http\Resources\ApiRecordResource;
 use App\Http\Resources\RecordResource;
 use App\Models\Person;
 use App\Models\Record;
+use App\Services\DeviceService;
+use App\Services\PeopleService;
 use App\Traits\HistoryTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -64,6 +66,10 @@ class RecordController extends Controller
 
         $record->save();
 
-        return new ApiRecordResource($record);
+        // is person in the record registered
+        $peopleService = resolve('PeopleService');
+        $registered = $peopleService->isRegistered($request->rfid, $request->device->id);
+
+        return new ApiRecordResource(['registered' => $registered]);
     }
 }

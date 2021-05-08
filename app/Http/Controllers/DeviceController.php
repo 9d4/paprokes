@@ -20,7 +20,7 @@ class DeviceController extends Controller
      */
     public function index()
     {
-        $devices = Auth::user()->devices()->with('key')->get();
+        $devices = Auth::user()->devices()->with('key')->get()->sortByDesc('created_at');
 
         foreach ($devices as $device) {
             $created_at = Carbon::createFromTimeString($device->created_at);
@@ -78,7 +78,7 @@ class DeviceController extends Controller
             abort(404);
 
         if (Gate::allows('control-device', $device))
-            return view('dash.device.item.index', ['device' => $device]);
+            return view('dash.device.single.index', ['device' => $device]);
 
         abort(403);
     }
@@ -110,10 +110,10 @@ class DeviceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($device_id)
     {
-        //
+        Device::query()->where('device_id', $device_id)->delete();
+        return back()->with(['deleted' => true]);
     }
 }

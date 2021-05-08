@@ -12,7 +12,7 @@ use Illuminate\Support\Arr;
 class DashController extends Controller
 {
     public function index() {
-        return view('index');
+        return redirect(route('device.index'));
     }
 
 //    public function index()
