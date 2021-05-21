@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\RecordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -23,6 +24,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
     include 'device.php';
+
+    // tmp
+    Route::get('/api/{device}/all', [RecordController::class, 'index'])->name('api.records');
 });
 
 Route::group(['middleware' => 'guest'], function () {
@@ -34,6 +38,5 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::get('debug', function () {
-
-    abort(404);
+    return resolve('DeviceService')->getNameByRfid('asd');
 });

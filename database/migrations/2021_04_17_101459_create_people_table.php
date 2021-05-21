@@ -17,7 +17,7 @@ class CreatePeopleTable extends Migration
             $table->collation = 'utf8mb4_bin';
             $table->bigIncrements('id');
             $table->foreignId('device_id')->constrained();
-            $table->string('rfid')->unique();
+            $table->string('rfid');
             $table->string('name');
             $table->timestamps();
         });

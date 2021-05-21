@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Events\NewRecord;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ApiNewRecord;
+use App\Http\Requests\Device\Single\IndexRequest;
 use App\Http\Resources\ApiRecordResource;
 use App\Http\Resources\RecordResource;
 use App\Models\Person;
@@ -17,16 +18,16 @@ use Illuminate\Http\Request;
 
 class RecordController extends Controller
 {
-    public function index()
+    public function index(IndexRequest $request, $device_id)
     {
-        $Records = Record::all()->sortByDesc('created_at')->take(128);
+        $Records = Record::query()->where('device_id', $request->device->id)->with('device')->get()->sortByDesc('created_at');
 
         foreach ($Records as $record) {
-            $record->registered = !!HistoryTrait::isUserRegistered($record['rfid']);
-            $record->name = HistoryTrait::getNameByRFID($record['rfid']);
+            $peopleService = resolve('PeopleService');
+            $record->name = $peopleService->getNameByRfidIn($record->rfid, $record->device()->first()->device_id);
         }
 
-        return RecordResource::collection($Records);
+        return ApiRecordResource::collection($Records);
     }
 
     public function store(Request $request)
@@ -57,6 +58,8 @@ class RecordController extends Controller
 
     public function newRecord(ApiNewRecord $request)
     {
+        $device = $request->device;
+
         // push record
         $record = new Record;
 
@@ -66,10 +69,13 @@ class RecordController extends Controller
 
         $record->save();
 
-        // is person in the record registered
+        // push name if exists
         $peopleService = resolve('PeopleService');
-        $registered = $peopleService->isRegistered($request->rfid, $request->device->id);
+        $record->name = $peopleService->getNameByRfidIn($record->rfid, $device->device_id);
 
-        return new ApiRecordResource(['registered' => $registered]);
+        // fire event
+        broadcast(new NewRecord($record, $device));
+
+        return new ApiRecordResource($record);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Device;
+use App\Models\Person;
 
 class DeviceService
 {
@@ -31,5 +32,10 @@ class DeviceService
             ->sortable(['created_at' => 'desc'])
             ->paginate(50)
             ->withQueryString();
+    }
+
+    public static function getDeviceName($device_id)
+    {
+        return Device::query()->where('device_id', $device_id)->first()->name ?? null;
     }
 }

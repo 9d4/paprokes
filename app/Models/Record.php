@@ -20,4 +20,9 @@ class Record extends Model
     public $sortable = [
         'rfid', 'temp', 'created_at',
     ];
+
+    public function device()
+    {
+        return $this->belongsTo(Device::class);
+    }
 }

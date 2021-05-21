@@ -2,8 +2,11 @@
 
 namespace App\Events;
 
+use App\Http\Resources\ApiRecordResource;
 use App\Http\Resources\RecordResource;
+use App\Models\Device;
 use App\Models\Record;
+use App\Services\PeopleService;
 use App\Traits\HistoryTrait;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -18,17 +21,17 @@ class NewRecord implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $record;
+    protected $device;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Record $record)
+    public function __construct(Record $record, Device $device)
     {
-        $rec = $record;
-        $rec->name = HistoryTrait::getNameByRFID($record->rfid);
-        $this->record = new RecordResource($rec);
+        $this->record = new ApiRecordResource($record);
+        $this->device = $device;
     }
 
     /**
@@ -38,6 +41,6 @@ class NewRecord implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('record');
+        return new PrivateChannel(config('channel.record'). '.' . $this->device->device_id);
     }
 }

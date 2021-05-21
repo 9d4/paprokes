@@ -12,9 +12,6 @@
     @elseguest
         <link rel="stylesheet" href="{{ asset('v2-assets/css/tw.css') }}">
     @endauth
-    <script>
-        let app = {!! json_encode(['csrf' => csrf_token()]) !!}
-    </script>
 </head>
 @auth
     <body class="layout-fixed layout-navbar-fixed dark-mode">

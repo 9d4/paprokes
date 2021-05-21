@@ -1,6 +1,7 @@
 {
     "/v2-assets/js/app.js": "/v2-assets/js/app.js",
     "/v2-assets/js/admin.js": "/v2-assets/js/admin.js",
+    "/v2-assets/js/realtime-page.js": "/v2-assets/js/realtime-page.js",
     "/beta/realtime/app.js": "/beta/realtime/app.js",
     "/v2-assets/css/tw.css": "/v2-assets/css/tw.css",
     "/v2-assets/css/admin.css": "/v2-assets/css/admin.css",

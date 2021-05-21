@@ -8,4 +8,5 @@ Route::resource('device', DeviceController::class);
 
 Route::group(['prefix' => 'device'], function () {
     Route::get('{device}/record', [RecordController::class, 'index'])->name('device.record.index');
+    Route::get('{device}/now', [RecordController::class, 'realtime'])->name('device.record.now');
 });

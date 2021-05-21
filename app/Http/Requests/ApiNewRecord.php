@@ -20,7 +20,7 @@ class ApiNewRecord extends FormRequest
         $key = Key::query()->where('api_key', $api_key)->with('device')->get();
 
         if ($key->count()) {
-            // inject \device\ model based on api_key
+            // bind device model
             $this->merge([
                 'device' => $key->first()->device()->first(),
             ]);

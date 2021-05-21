@@ -16,6 +16,7 @@ let js_folder = 'v2-assets/js'
 
 mix.js('resources/v2/js/app.js', js_folder)
     .js('resources/v2/js/admin.js', js_folder)
+    .js('resources/v2/js/realtime-page.js', js_folder)
     .postCss('resources/v2/css/tw.css', css_folder, [require('tailwindcss')])
     .sass('resources/v2/css/admin.sass', css_folder);
 
