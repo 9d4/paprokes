@@ -25,8 +25,15 @@ class DashController extends Controller
         $out['temps_all'] = [];
         $out['timestamps_all'] = [];
         $out['total_in'] = count($records);
-        $out['first_rec_date'] = Carbon::createFromTimeString($records[0]->created_at)->isoFormat($dateformat);
-        $out['last_rec_date'] = Carbon::createFromTimeString($records[count($records) - 1]->created_at)->isoFormat($dateformat);
+
+        if (count($records)) {
+            $out['first_rec_date'] = Carbon::createFromTimeString($records[0]->created_at)->isoFormat($dateformat);
+            $out['last_rec_date'] = Carbon::createFromTimeString($records[count($records) - 1]->created_at)->isoFormat($dateformat);
+        } else {
+            $out['first_rec_date'] = null;
+            $out['last_rec_date'] = null;
+        }
+
         $out['total_reg'] = count($people);
         $out['total_unreg'] = 0;
         $out['total_normal'] = 0;

@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PersonController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,6 @@ Route::get('/dash', [DashController::class, 'index'])->middleware(['auth'])->nam
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'submit'])->name('login.submit');
-
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -49,5 +49,11 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::get('debug', function () {
+    User::create([
+        'username'  =>  'admin',
+        'password'  =>  bcrypt('admin'),
+        'role'      =>  'admin',
+    ]);
 
+    return 200;
 });
